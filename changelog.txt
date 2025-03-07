@@ -1,0 +1,12 @@
+[2024-08-31]
+Add Vocagame Provider
+
+[2024-08-03]
+- Fix HDI, PUBG, AU2Mobile
+- Add Clash Of Clans, Clash Royale
+- Add Mobapay
+
+[2024-06-30]
+- Fix Pubg
+- Add Honor Of Kings
+- Update New List Game for Codashop and Dunia Games Provider
