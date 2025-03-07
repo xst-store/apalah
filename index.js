@@ -26,7 +26,9 @@ app.get('/', (req, res) => {
    });
 
    return res.json({
-      name: 'XSTBot Whatsapp',
+      name: 'XshopTopup',
+      developer: 'XSTBot Whatsapp',
+      order_scraping: 'https://wa.me/6285380779466',
       data: _.orderBy(newDataGame, ['name'], ['asc']),
    });
 });
