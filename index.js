@@ -14,6 +14,10 @@ app.use(cors());
 app.use('/api', router);
 
 app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/endpoint', (req, res) => {
    const newDataGame = dataGame.map((item) => {
       return {
          name: item.name,
