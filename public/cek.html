@@ -1,0 +1,283 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Store Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+        .navbar {
+            background-color: #2d3748;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar .title {
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        .navbar .icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .navbar .icons i {
+            color: white;
+            cursor: pointer;
+        }
+        .navbar .icons .cart {
+            position: relative;
+        }
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        .profile img {
+            border-radius: 9999px;
+            border: 4px solid white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .profile h1 {
+            margin-top: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .product {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            width: 16rem;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .product:hover {
+            transform: scale(1.02);
+        }
+        .product img {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+        }
+        .product .details {
+            padding: 1rem;
+        }
+        .product .details h2 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .product .details p {
+            margin: 0.25rem 0;
+        }
+        .product .details .price {
+            color: #48bb78;
+            font-weight: 700;
+        }
+        .product .details .old-price {
+            color: #a0aec0;
+            text-decoration: line-through;
+        }
+        .footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 1rem;
+            background-color: #2d3748;
+            color: white;
+        }
+        .footer p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .footer p .heart {
+            color: #f56565;
+        }
+        .search-bar {
+            display: none;
+            position: absolute;
+            top: 4rem;
+            right: 1rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+        .search-bar input {
+            border: 1px solid #cbd5e0;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            width: 200px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            z-index: 1000;
+            transition: left 0.3s ease;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar .close-btn {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .sidebar .close-btn i {
+            cursor: pointer;
+        }
+        .sidebar .links {
+            margin-top: 1rem;
+        }
+        .sidebar .links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .sidebar .links a i {
+            color: #2d3748;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .overlay.open {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="title">Home</div>
+        <div class="icons">
+            <i class="fas fa-search" onclick="toggleSearchBar()"></i>
+            <div class="cart" onclick="toggleSidebar()">
+                <i class="fas fa-bars" id="cartIcon"></i>
+            </div>
+        </div>
+    </nav>
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+        <input type="text" placeholder="Search..." oninput="searchProducts(event)"/>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn">
+            <i class="fas fa-times" onclick="toggleSidebar()"></i>
+        </div>
+        <h2>Your Cart</h2>
+        <p>No items in cart.</p>
+        <div class="links">
+            <a href="/stalk-freefire"><i class="fas fa-link"></i>Stalk Free Fire</a>
+            <a href="#link2"><i class="fas fa-link"></i>Link 2</a>
+        </div>
+    </div>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <!-- Profile Section -->
+    <div class="profile">
+        <img alt="Profile picture of the store" height="100" src="https://storage.googleapis.com/a1aa/image/QESICg3WaF60yrPCchu9ejiXKF3btqOm64IutTXokg0.jpg" width="100"/>
+        <h1>@xstbot-store</h1>
+    </div>
+    <!-- Products Section -->
+    <div class="products" id="products">
+        <!-- Product 1 -->
+        <div class="product" data-name="Script Script Cek Name Game" onclick="window.location.href='#link1'">
+            <img alt="Product image of Script Script Cek Name Game" src="https://storage.googleapis.com/a1aa/image/xWIBJAeYVO5Uz3a1iz-X2yZLF1713Qf2EwrEKQneHB4.jpg"/>
+            <div class="details">
+                <h2>Script Cek Name Game</h2>
+                <p class="price">IDR 55,000</p>
+                <p class="old-price">IDR 125,000</p>
+            </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="product" data-name="Scrape Cek Region Mlbb" onclick="window.location.href='#link2'">
+            <img alt="Product image of Scrape Cek Region Mlbb" src="https://storage.googleapis.com/a1aa/image/2MrmSv90C6EToFnL686mUkm7THNyBoSPCbksoB0qLjA.jpg"/>
+            <div class="details">
+                <h2>Scrape Cek Region Mlbb</h2>
+                <p class="price">IDR 20,000</p>
+                <p class="old-price">IDR 35,000</p>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>made with <span class="font-bold">LYNK</span> <i class="fas fa-heart heart"></i></p>
+    </footer>
+    <script>
+        function toggleSearchBar() {
+            const searchBar = document.getElementById('searchBar');
+            if (searchBar.style.display === 'none' || searchBar.style.display === '') {
+                searchBar.style.display = 'block';
+            } else {
+                searchBar.style.display = 'none';
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const cartIcon = document.getElementById('cartIcon');
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+                cartIcon.classList.remove('fa-times');
+                cartIcon.classList.add('fa-bars');
+            } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('open');
+                cartIcon.classList.remove('fa-bars');
+                cartIcon.classList.add('fa-times');
+            }
+        }
+
+        function searchProducts(event) {
+            const query = event.target.value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const name = product.getAttribute('data-name').toLowerCase();
+                if (name.includes(query)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
